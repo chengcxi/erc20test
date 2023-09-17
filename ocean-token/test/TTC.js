@@ -43,20 +43,20 @@ describe("TTC contract", function() {
   describe("Transactions", function () {
     it("Should transfer tokens between accounts", async function () {
       // Transfer 50 tokens from owner to addr1
-      await ttc.transfer(addr1.address, 50);
+      await ttc.transfer(addr1.address, 1);
       const addr1Balance = await ttc.balanceOf(addr1.address);
-      expect(addr1Balance).to.equal(50);
+      expect(addr1Balance).to.equal(1);
 
       // Transfer 50 tokens from addr1 to addr2
       // We use .connect(signer) to send a transaction from another account
       await ttc.connect(addr1).transfer(addr2.address, 50);
       const addr2Balance = await ttc.balanceOf(addr2.address);
-      expect(addr2Balance).to.equal(50);
+      expect(addr2Balance).to.equal(1);
     });
 
     it("Should fail if sender doesn't have enough tokens", async function () {
       const initialOwnerBalance = await ttc.balanceOf(owner.address);
-      // Try to send 1 token from addr1 (0 tokens) to owner (1000000 tokens).
+      // Try to send 1 token from addr1 (0 tokens) to owner (100 tokens).
       // `require` will evaluate false and revert the transaction.
       await expect(
         ttc.connect(addr1).transfer(owner.address, 1)
@@ -72,20 +72,20 @@ describe("TTC contract", function() {
       const initialOwnerBalance = await ttc.balanceOf(owner.address);
 
       // Transfer 100 tokens from owner to addr1.
-      await ttc.transfer(addr1.address, 100);
+      await ttc.transfer(addr1.address, 10);
 
       // Transfer another 50 tokens from owner to addr2.
-      await ttc.transfer(addr2.address, 50);
+      await ttc.transfer(addr2.address, 1);
 
       // Check balances.
       const finalOwnerBalance = await ttc.balanceOf(owner.address);
       expect(finalOwnerBalance).to.equal(initialOwnerBalance.sub(150));
 
       const addr1Balance = await ttc.balanceOf(addr1.address);
-      expect(addr1Balance).to.equal(100);
+      expect(addr1Balance).to.equal(10);
 
       const addr2Balance = await ttc.balanceOf(addr2.address);
-      expect(addr2Balance).to.equal(50);
+      expect(addr2Balance).to.equal(1);
     });
   });
   
