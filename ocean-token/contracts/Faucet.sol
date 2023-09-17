@@ -15,7 +15,7 @@ contract Faucet {
     address payable owner;
     IERC20 public token;
 
-    uint256 public withdrawalAmount = 50 * (10**18);
+    uint256 public withdrawalAmount = 1 * (10**18);
     uint256 public lockTime = 1 minutes;
 
     event Withdrawal(address indexed to, uint256 indexed amount);
