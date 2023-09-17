@@ -71,10 +71,10 @@ describe("TTC contract", function() {
     it("Should update balances after transfers", async function () {
       const initialOwnerBalance = await ttc.balanceOf(owner.address);
 
-      // Transfer 100 tokens from owner to addr1.
+      // Transfer 10 tokens from owner to addr1.
       await ttc.transfer(addr1.address, 10);
 
-      // Transfer another 50 tokens from owner to addr2.
+      // Transfer another 1 token from owner to addr2.
       await ttc.transfer(addr2.address, 1);
 
       // Check balances.
