@@ -2,7 +2,7 @@ const hre = require("hardhat");
 
 async function main() {
   const TTC = await hre.ethers.getContractFactory("TTC");
-  const ttc = await TTC.deploy(100000000, 50);
+  const ttc = await TTC.deploy(100, 1);
 
   await ttc.deployed();
 
