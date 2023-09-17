@@ -8,8 +8,8 @@ describe("TTC contract", function() {
   let owner;
   let addr1;
   let addr2;
-  let tokenCap = 100000000;
-  let tokenBlockReward = 50;
+  let tokenCap = 100;
+  let tokenBlockReward = 1;
 
   beforeEach(async function () {
     // Get the ContractFactory and Signers here.
