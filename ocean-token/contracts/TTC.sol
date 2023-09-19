@@ -4,17 +4,22 @@
 pragma solidity ^0.8.21;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol"
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract TTC is ERC20Capped, ERC20Burnable {
+contract TTC is ERC20Capped, ERC20Burnable, Ownable {
     address payable public owner;
     uint256 public blockReward;
+    uint8 private _decimals = 18;
+    uint256 private _totalSupply;
+    mapping(address => uint256) private _balances;
+    mapping(address => mapping(address => uint256)) private _allowances;
 
-    constructor(uint256 cap, uint256 reward) ERC20("TTC", "TTC") ERC20Capped(cap * (10 ** decimals())) {
-        owner = payable(msg.sender);
-        _mint(owner, 100 * (10 ** decimals()));
-        blockReward = reward * (10 ** decimals());
+    constructor(uint256 initialSupply) {
+        _totalSupply = initialSupply * 10 ** uint256(_decimals);
+        _balances[msg.sender] = _totalSupply;
+        emit Transfer(address(0), msg.sender, _totalSupply);
     }
 
     function _mint(address account, uint256 amount) internal virtual override(ERC20Capped, ERC20) {
