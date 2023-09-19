@@ -17,6 +17,6 @@ contract CryptoPriceTracker {
             uint timeStamp,
             uint80 answeredInRound
         ) = priceFeed.latestRoundData();
-        return price;
+        return (price, timeStamp);
     }
 }
