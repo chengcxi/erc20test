@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 // Define your token contract
 contract MyToken is IERC20, Ownable {
-    string private _name = "My Token";
-    string private _symbol = "MTK";
+    string private _name = "TTC Token";
+    string private _symbol = "TTC";
     uint8 private _decimals = 18;
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
