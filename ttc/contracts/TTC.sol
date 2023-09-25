@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
-// Import the ERC-20 interface
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import {IERC20Metadata} from "./extensions/IERC20Metadata.sol";
 import {Context} from "../../utils/Context.sol";
 import {IERC20Errors} from "../../interfaces/draft-IERC6093.sol";
 
-// Define your token contract
 contract TTC is IERC20, Ownable, Context, IERC20, IERC20Metadata, IERC20Errors {
     string private _name = "TTC Token";
     string private _symbol = "TTC";
@@ -92,7 +90,6 @@ contract TTC is IERC20, Ownable, Context, IERC20, IERC20Metadata, IERC20Errors {
 
     function _update(address from, address to, uint256 value) internal virtual {
         if (from == address(0)) {
-            // Overflow check required: The rest of the code assumes that totalSupply never overflows
             _totalSupply += value;
         } else {
             uint256 fromBalance = _balances[from];
@@ -100,19 +97,16 @@ contract TTC is IERC20, Ownable, Context, IERC20, IERC20Metadata, IERC20Errors {
                 revert ERC20InsufficientBalance(from, fromBalance, value);
             }
             unchecked {
-                // Overflow not possible: value <= fromBalance <= totalSupply.
                 _balances[from] = fromBalance - value;
             }
         }
 
         if (to == address(0)) {
             unchecked {
-                // Overflow not possible: value <= totalSupply or value <= fromBalance <= totalSupply.
                 _totalSupply -= value;
             }
         } else {
             unchecked {
-                // Overflow not possible: balance + value is at most totalSupply, which we know fits into a uint256.
                 _balances[to] += value;
             }
         }
