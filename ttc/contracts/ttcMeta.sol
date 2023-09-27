@@ -3,7 +3,7 @@
 
 pragma solidity ^0.8.21;
 
-import {IERC20} from "../IERC20.sol";
+import {TTC} from "../TTC.sol";
 
 interface IERC20Metadata is IERC20 {
 
