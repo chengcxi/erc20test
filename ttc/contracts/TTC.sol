@@ -3,9 +3,9 @@ pragma solidity ^0.8.21;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import {IERC20Metadata} from "./extensions/IERC20Metadata.sol";
-import {Context} from "../../utils/Context.sol";
-import {IERC20Errors} from "../../interfaces/draft-IERC6093.sol";
+import {ttcMeta} from "./ttcMeta.sol";
+//import {Context} from "../../utils/Context.sol";
+//import {IERC20Errors} from "../../interfaces/draft-IERC6093.sol";
 
 contract TTC is IERC20, Ownable, Context, IERC20, IERC20Metadata, IERC20Errors {
     string private _name = "TTC Token";
