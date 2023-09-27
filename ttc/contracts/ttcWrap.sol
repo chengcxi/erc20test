@@ -6,19 +6,9 @@ pragma solidity ^0.8.21;
 import {IERC20, IERC20Metadata, ERC20} from "../ERC20.sol";
 import {SafeERC20} from "../utils/SafeERC20.sol";
 
-/**
- * @dev Extension of the ERC20 token contract to support token wrapping.
- *
- * Users can deposit and withdraw "underlying tokens" and receive a matching number of "wrapped tokens". This is useful
- * in conjunction with other modules. For example, combining this wrapping mechanism with {ERC20Votes} will allow the
- * wrapping of an existing "basic" ERC20 into a governance token.
- */
 abstract contract ERC20Wrapper is ERC20 {
     IERC20 private immutable _underlying;
 
-    /**
-     * @dev The underlying token couldn't be wrapped.
-     */
     error ERC20InvalidUnderlying(address token);
 
     constructor(IERC20 underlyingToken) {
@@ -28,9 +18,6 @@ abstract contract ERC20Wrapper is ERC20 {
         _underlying = underlyingToken;
     }
 
-    /**
-     * @dev See {ERC20-decimals}.
-     */
     function decimals() public view virtual override returns (uint8) {
         try IERC20Metadata(address(_underlying)).decimals() returns (uint8 value) {
             return value;
@@ -39,16 +26,10 @@ abstract contract ERC20Wrapper is ERC20 {
         }
     }
 
-    /**
-     * @dev Returns the address of the underlying ERC-20 token that is being wrapped.
-     */
     function underlying() public view returns (IERC20) {
         return _underlying;
     }
 
-    /**
-     * @dev Allow a user to deposit underlying tokens and mint the corresponding number of wrapped tokens.
-     */
     function depositFor(address account, uint256 value) public virtual returns (bool) {
         address sender = _msgSender();
         if (sender == address(this)) {
@@ -62,9 +43,6 @@ abstract contract ERC20Wrapper is ERC20 {
         return true;
     }
 
-    /**
-     * @dev Allow a user to burn a number of wrapped tokens and withdraw the corresponding number of underlying tokens.
-     */
     function withdrawTo(address account, uint256 value) public virtual returns (bool) {
         if (account == address(this)) {
             revert ERC20InvalidReceiver(account);
@@ -74,10 +52,6 @@ abstract contract ERC20Wrapper is ERC20 {
         return true;
     }
 
-    /**
-     * @dev Mint wrapped token to cover any underlyingTokens that would have been transferred by mistake. Internal
-     * function that can be exposed with access control if desired.
-     */
     function _recover(address account) internal virtual returns (uint256) {
         uint256 value = _underlying.balanceOf(address(this)) - totalSupply();
         _mint(account, value);
