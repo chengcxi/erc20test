@@ -3,8 +3,8 @@
 
 pragma solidity ^0.8.21;
 
-import {IERC20, IERC20Metadata, ERC20} from "../ERC20.sol";
-import {SafeERC20} from "../utils/SafeERC20.sol";
+import {ITTC, ttcMeta, TTC} from "../TTC.sol";
+//import {SafeERC20} from "../utils/SafeERC20.sol";
 
 abstract contract ERC20Wrapper is ERC20 {
     IERC20 private immutable _underlying;
