@@ -88,30 +88,30 @@ contract TTC is IERC20, Ownable, Context, IERC20, IERC20Metadata, IERC20Errors {
         emit Transfer(sender, recipient, amount);
     }
 
-    function _update(address from, address to, uint256 value) internal virtual {
-        if (from == address(0)) {
+    function _update(address sender, address recipient, uint256 amount) internal virtual {
+        if (sender == address(0)) {
             _totalSupply += value;
         } else {
-            uint256 fromBalance = _balances[from];
+            uint256 fromBalance = _balances[sender];
             if (fromBalance < value) {
-                revert ERC20InsufficientBalance(from, fromBalance, value);
+                revert ERC20InsufficientBalance(sender, fromBalance, value);
             }
             unchecked {
-                _balances[from] = fromBalance - value;
+                _balances[sender] = fromBalance - value;
             }
         }
 
-        if (to == address(0)) {
+        if (recipient == address(0)) {
             unchecked {
                 _totalSupply -= value;
             }
         } else {
             unchecked {
-                _balances[to] += value;
+                _balances[recipient] += value;
             }
         }
 
-        emit Transfer(from, to, value);
+        emit Transfer(sender, recipient, value);
     }
 
     function _mint(address account, uint256 amount) internal {
